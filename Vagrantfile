@@ -46,6 +46,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
   config.vm.synced_folder "./public" , "/var/www/" + project_name + "/",  :nfs => true, :mount_options => ['actimeo=2']
 
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+    config.cache.auto_detect = true
+  end
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
