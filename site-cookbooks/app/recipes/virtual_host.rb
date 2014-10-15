@@ -4,14 +4,20 @@ app_name = "#{node['app']['name']}"
 
 template "/etc/nginx/sites-available/#{node['app']['name']}.conf" do
   source "nginx_virtual_host.conf.erb"
-  variables(
-    :php => node['php'],
-    :root => node['app']['name']
-  )
+  action :create
+end
+
+template "/etc/nginx/sites-available/dev-tools.conf" do
+  source "nginx_virtual_host_dev_tools.conf.erb"
   action :create
 end
 
 nginx_site "#{node['app']['name']}.conf" do
+  enable true
+  notifies :restart, :service => 'nginx'
+end
+
+nginx_site "dev-tools.conf" do
   enable true
   notifies :restart, :service => 'nginx'
 end

@@ -1,14 +1,14 @@
 server {
     listen 80;
-    server_name www.<%= node[:app][:name] %>.local;
-    root /var/www/<%= node[:app][:name] %>/web;
+    server_name dev-tools.<%= node[:app][:name] %>.local;
+    root /var/www/dev-tools-public;
 
     location / {
         # try to serve file directly, fallback to app.php
-        try_files $uri /app_dev.php$is_args$args;
+        index index.php;
     }
 
-    location ~ ^/(app|app_dev|config)\.php(/|$) {
+    location ~ \.php {
         include fastcgi_params;
         fastcgi_pass unix:/var/run/php-fpm-www.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;

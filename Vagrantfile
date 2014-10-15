@@ -45,7 +45,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./public" , "/var/www/" + project_name + "/",  :nfs => true, :mount_options => ['rw', 'vers=3', 'tcp', 'fsc' ,'actimeo=2']
+  config.vm.synced_folder "./www-public" , "/var/www/" + project_name + "/",  :nfs => true, :mount_options => ['rw', 'vers=3', 'tcp', 'fsc' ,'actimeo=2']
+  config.vm.synced_folder "./dev-tools-public" , "/var/www/dev-tools-public/",  :nfs => true, :mount_options => ['rw', 'vers=3', 'tcp', 'fsc' ,'actimeo=2']
 
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
@@ -75,13 +76,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define project_name do |node|
     node.vm.hostname = project_name + ".local"
     node.vm.network :private_network, ip: ip_address
-    node.hostmanager.aliases = [ "www." + project_name + ".local" ]
+    node.hostmanager.aliases = [ "www." + project_name + ".local","dev-tools." + project_name + ".local", ]
   end
   config.vm.provision :hostmanager
 
 
   config.vm.provision "chef_solo" do |chef|
-    chef.log_level = :debug  
+    #chef.log_level = :debug  
     
     chef.custom_config_path = "Vagrantfile.chef"
 
@@ -97,7 +98,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.add_recipe "mysql::server"
     chef.add_recipe "mysql::client"
+    chef.add_recipe "app::install_other_package"
     chef.add_recipe "app::virtual_host"
+    chef.add_recipe "app::link_phpredis"
     chef.json = {
       :app => {
         :name           => project_name
@@ -105,7 +108,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       :php => {
         :ext_conf_dir => '/etc/php5/mods-available',
         :directives => {
-          "date.timezone" => "Asia/Shanghai"
+          "date.timezone" => "Asia/Shanghai",
+          "short_open_tag" => "Off",
+          "display_errors" => "On"
         }
       },  
       :mysql =>{
@@ -115,9 +120,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :bind_address           => ip_address,
         :allow_remote_root      => true
       },
-      'versions' => {
+      :versions => {
         "php5" => '5.5.*'
-      }
+      },
+      :packages => [
+        "php5-intl php5-mysqlnd php5-curl php5-mcrypt php5-gd php5-mcrypt"
+      ]
     }
 
   end
