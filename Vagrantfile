@@ -3,6 +3,7 @@
 
 ip_address = "172.22.22.22"
 project_name = "my-project"
+one_for_all_password = "123456"
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
@@ -44,7 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./public" , "/var/www/" + project_name + "/",  :nfs => true, :mount_options => ['actimeo=2']
+  config.vm.synced_folder "./public" , "/var/www/" + project_name + "/",  :nfs => true, :mount_options => ['rw', 'vers=3', 'tcp', 'fsc' ,'actimeo=2']
 
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
@@ -58,8 +59,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.customize ["modifyvm", :id, "--cpuexecutioncap", "95"]
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-      v.customize ["modifyvm", :id, "--memory", "1024"]
-      v.customize ["modifyvm", :id, "--cpus", 2]
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+      v.customize ["modifyvm", :id, "--cpus", 4]
   end
 
   config.vm.provision :shell, :inline => "sed -i 's#archive.ubuntu.com#mirrors.163.com#' /etc/apt/sources.list"
@@ -79,30 +80,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :hostmanager
 
 
-  # Enable provisioning with chef solo, specifying a cookbooks path, roles
-  # path, and data_bags path (all relative to this Vagrantfile), and adding
-  # some recipes and/or roles.
-  #
-  # config.vm.provision "chef_solo" do |chef|
-  #   chef.cookbooks_path = "../my-recipes/cookbooks"
-  #   chef.roles_path = "../my-recipes/roles"
-  #   chef.data_bags_path = "../my-recipes/data_bags"
-  #   chef.add_recipe "mysql"
-  #   chef.add_role "web"
-  #
-  #   # You may also specify custom JSON attributes:
-  #   chef.json = { mysql_password: "foo" }
-  # end
-
-
   config.vm.provision "chef_solo" do |chef|
-    
+    chef.log_level = :debug  
     
     chef.custom_config_path = "Vagrantfile.chef"
+
     chef.add_recipe "apt"
+    chef.add_recipe "composer"
     chef.add_recipe "git"
     chef.add_recipe "nginx"
+    chef.add_recipe "php5_ppa::from_ondrej"
     chef.add_recipe "php-fpm"
+
+    chef.add_recipe "redisio"
+    chef.add_recipe "php-redis"
+
     chef.add_recipe "mysql::server"
     chef.add_recipe "mysql::client"
     chef.add_recipe "app::virtual_host"
@@ -111,12 +103,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :name           => project_name
       },
       :php => {
-        # Customize PHP modules here
-        :packages                => %w{ php5 php5-dev php5-cli php-pear php5-apcu php5-mysql php5-curl php5-mcrypt php5-memcached php5-gd php5-json },
-
-        # It is necessary to specify a custom conf dir as we are using Apache 2.4
-        :ext_conf_dir            => "/etc/php5/mods-available"
+        :ext_conf_dir => '/etc/php5/mods-available',
+        :directives => {
+          "date.timezone" => "Asia/Shanghai"
+        }
       },  
+      :mysql =>{
+        :server_root_password   => one_for_all_password,
+        :server_repl_password   => one_for_all_password,
+        :server_debian_password => one_for_all_password,
+        :bind_address           => ip_address,
+        :allow_remote_root      => true
+      },
       'versions' => {
         "php5" => '5.5.*'
       }
