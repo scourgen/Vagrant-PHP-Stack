@@ -21,6 +21,12 @@ A kick-ass Vagrant Stack for PHP developer.
 
 ## Quick start
 
+## FAQ
+
+* I'm stuck at retrieving the chef****.deb (for example chef_11.16.4-1_amd64.deb) file at amazone s3,you can do somthing like this:
+** download the file from anywhere else (for example by thunder)
+** put it into ~/.vagrant.d/cache/ubuntu/trusty64/vagrant_omnibus
+** done.
 
 ## Contributing
 
