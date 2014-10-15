@@ -23,10 +23,16 @@ A kick-ass Vagrant Stack for PHP developer.
 
 ## FAQ
 
-* I'm stuck at retrieving the chef****.deb (for example chef_11.16.4-1_amd64.deb) file at amazone s3,you can do somthing like this:
-** download the file from anywhere else (for example by thunder)
-** put it into ~/.vagrant.d/cache/ubuntu/trusty64/vagrant_omnibus
-** done.
+I'm stuck at retrieving the chef****.deb (for example chef_11.16.4-1_amd64.deb) file at amazone s3,you can do somthing like this:
+
+* download the file from anywhere else (for example by thunder)
+* put it into ~/.vagrant.d/cache/ubuntu/trusty64/vagrant_omnibus
+* done.
+
+I got this error : ERROR: You must specify at least one cookbook repo path
+
+* try to `vagrant reload --provision`
+* If it's not working, delete your `~/.vagrant.d` folder and try `vagrant reload --provision` again.
 
 ## Contributing
 
