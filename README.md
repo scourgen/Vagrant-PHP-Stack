@@ -29,7 +29,7 @@ A kick-ass Vagrant Stack for PHP developer.
 
 * try to run `export PATH='/opt/chefdk/bin:'$PATH` and add it in your .bashrc/.zshrc file , then run again.
 
-I got this error: `Operation timed out - connect(2) for "s3.amazonaws.com" port 443 (Errno::ETIMEDOUT)`
+### I got this error: `Operation timed out - connect(2) for "s3.amazonaws.com" port 443 (Errno::ETIMEDOUT)` ###
 
 * It's becasue that your network connection to Amazon S3 is poor, try to use vpn or use a fixed ip for s3.amazonaws.com in hosts file.
 
@@ -79,4 +79,4 @@ Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /bin/sed -r -e * d -ibak /etc/exports
 
 ## Contributing
 
-
+not one yet, pr is welcome !
