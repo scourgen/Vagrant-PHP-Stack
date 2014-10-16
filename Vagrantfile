@@ -110,7 +110,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :directives => {
           "date.timezone" => "Asia/Shanghai",
           "short_open_tag" => "Off",
-          "display_errors" => "On"
+          "display_errors" => "On",
+          "realpath_cache_size" => "4MB"
         }
       },  
       :mysql =>{
