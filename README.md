@@ -25,7 +25,7 @@ A kick-ass Vagrant Stack for PHP developer.
 
 ## FAQ
 
-I got this error: `RuntimeError: Couldn't determine Berks version`
+### I got this error: `RuntimeError: Couldn't determine Berks version` ###
 
 * try to run `export PATH='/opt/chefdk/bin:'$PATH` and add it in your .bashrc/.zshrc file , then run again.
 
@@ -33,23 +33,23 @@ I got this error: `Operation timed out - connect(2) for "s3.amazonaws.com" port 
 
 * It's becasue that your network connection to Amazon S3 is poor, try to use vpn or use a fixed ip for s3.amazonaws.com in hosts file.
 
-I'm stuck at retrieving box file,what should I do?
+### I'm stuck at retrieving box file,what should I do? ###
 
 * download box file by thunder or somthingelse, the url will be `https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/1/providers/virtualbox.box`
 * use the command to add the box locally `vagrant box add "ubuntu/trusty64" /path/to/virtualbox.box`
 
-I'm stuck at retrieving the chef****.deb (for example chef_11.16.4-1_amd64.deb) file at amazone s3,you can do somthing like this:
+### I'm stuck at retrieving the chef****.deb (for example chef_11.16.4-1_amd64.deb) file at amazone s3,you can do somthing like this: ###
 
 * download the file from anywhere else (for example by thunder)
 * put it into ~/.vagrant.d/cache/ubuntu/trusty64/vagrant_omnibus
 * done.
 
-I got this error : ERROR: You must specify at least one cookbook repo path
+### I got this error : ERROR: You must specify at least one cookbook repo path ###
 
 * try to `vagrant reload --provision`
 * If it's not working, delete your `~/.vagrant.d` folder and try `vagrant reload --provision` again.
 
-Root Privilege Requirement (refs: http://docs.vagrantup.com/v2/synced-folders/nfs.html)
+### Root Privilege Requirement (refs: http://docs.vagrantup.com/v2/synced-folders/nfs.html) ###
 
 To configure NFS, Vagrant must modify system files on the host. Therefore, at some point during the vagrant up sequence, you may be prompted for administrative privileges (via the typical sudo program). These privileges are used to modify /etc/exports as well as to start and stop the NFS server daemon.
 
