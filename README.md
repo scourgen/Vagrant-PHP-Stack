@@ -23,6 +23,11 @@ A kick-ass Vagrant Stack for PHP developer.
 
 ## FAQ
 
+I'm stuck at retrieving box file,what should I dow?
+
+* download box file by thunder or somthingelse, the url will be `https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/1/providers/virtualbox.box`
+* use the command to add the box locally `vagrant box add "ubuntu/trusty64" /path/to/virtualbox.box`
+
 I'm stuck at retrieving the chef****.deb (for example chef_11.16.4-1_amd64.deb) file at amazone s3,you can do somthing like this:
 
 * download the file from anywhere else (for example by thunder)
