@@ -7,6 +7,8 @@ A kick-ass Vagrant Stack for PHP developer.
 
 * [VirtualBox](https://www.virtualbox.org)
 * [Vagrant](http://vagrantup.com)
+* [Chef Development Kit](http://www.getchef.com)
+  * Download ChefDK from here: `http://getchef.com/downloads/chef-dk`
 * [Berkshelf](http://berkshelf.com)
   * `gem install berkshelf`
 * [vagrant-cachier](https://github.com/fgrehm/vagrant-cachier)
@@ -22,6 +24,14 @@ A kick-ass Vagrant Stack for PHP developer.
 ## Quick start
 
 ## FAQ
+
+I got this error: `RuntimeError: Couldn't determine Berks version`
+
+* try to run `export PATH='/opt/chefdk/bin:'$PATH` and add it in your .bashrc/.zshrc file , then run again.
+
+I got this error: `Operation timed out - connect(2) for "s3.amazonaws.com" port 443 (Errno::ETIMEDOUT)`
+
+* It's becasue that your network connection to Amazon S3 is poor, try to use vpn or use a fixed ip for s3.amazonaws.com in hosts file.
 
 I'm stuck at retrieving box file,what should I do?
 
