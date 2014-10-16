@@ -23,7 +23,7 @@ A kick-ass Vagrant Stack for PHP developer.
 
 ## FAQ
 
-I'm stuck at retrieving box file,what should I dow?
+I'm stuck at retrieving box file,what should I do?
 
 * download box file by thunder or somthingelse, the url will be `https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/1/providers/virtualbox.box`
 * use the command to add the box locally `vagrant box add "ubuntu/trusty64" /path/to/virtualbox.box`
