@@ -94,13 +94,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "php-fpm"
 
     chef.add_recipe "redisio"
-    chef.add_recipe "php-redis"
+    #chef.add_recipe "php-redis"
 
     chef.add_recipe "mysql::server"
     chef.add_recipe "mysql::client"
     chef.add_recipe "app::install_other_package"
     chef.add_recipe "app::virtual_host"
-    chef.add_recipe "app::link_phpredis"
+    #chef.add_recipe "app::link_phpredis"
     chef.json = {
       :app => {
         :name           => project_name
@@ -125,7 +125,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "php5" => '5.5.*'
       },
       :packages => [
-        "php5-intl php5-mysqlnd php5-curl php5-mcrypt php5-gd php5-mcrypt"
+        "php5-intl php5-mysqlnd php5-curl php5-mcrypt php5-gd php5-mcrypt php5-redis"
       ]
     }
 
