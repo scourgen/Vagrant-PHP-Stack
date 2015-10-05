@@ -31,7 +31,7 @@ A kick-ass Vagrant Stack for PHP developer.
 
 ### I got this error: `Operation timed out - connect(2) for "s3.amazonaws.com" port 443 (Errno::ETIMEDOUT)` ###
 
-* It's becasue that your network connection to Amazon S3 is poor, try to use vpn or use a fixed ip for s3.amazonaws.com in hosts file.
+* It's because that your network connection to Amazon S3 is poor, try to use vpn or use a fixed ip for s3.amazonaws.com in hosts file.
 
 ### I'm stuck at retrieving box file,what should I do? ###
 
